@@ -29,54 +29,19 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body onload="myFunction()">
   
   <div id="main">
-    <h1 id="test">welcome to pizza share</h1>
+    <h1 id="test">Choose Yo Toppings!</h1>
 
-    <p>Fill out the form to create a pizza</p>
+    <button class="btn-default" id="findBtn">Find some toppings!</button>
 
+    <p>Just select your favourite toppings down below</p>
 
-    <div style="display:none" class="error">
-      Looks like there was a problem saving the test object. Make sure you've set your application ID and javascript key correctly in the call to <code>Parse.initialize</code> in this file.
+    <div class="row">
+      <div class="toppingContent" id="list"></div>
     </div>
-
-    <div style="display:none" class="success">
-      <p>We've also just created your first object using the following code:</p>
-      
-        <code>
-          var TestObject = Parse.Object.extend("TestObject");<br/>
-          var testObject = new TestObject();<br/>
-          testObject.save({foo: "bar"});
-        </code>
-    </div>
-  </div>
-
-  <div style="display:none" class="access__container cf" id="accessContainer">
-          <!-- signin signup form -->
-          <form class="access__form cf" id="actionForm">
-            <input type="text" class="action__input" placeholder="Username" id="usernameField">
-            <input type="password" class="action__input" placeholder="Password" id="passwordField">
-          </form>
-          <!-- signup button -->
-          <button class="access__button" id="signUpBtn">Not signed up yet?</button>
-
-  </div>
-
-  <div id="pizzaContainer">
-    <form id="actionForm2">
-      <input type="text" placeHolder="Location" id="locationField">
-      <br>
-      <input type="text" placeHolder="Full Name" id="creatorField">
-      <br>
-      <input type="text" placeHolder="Email (kept private)" id="emailField">
-      <br>
-      <input type="text" placeHolder="Topping 1" id="toppingsField">
-      <input type="text" placeHolder="Topping 2" id="toppings2Field">
-      <input type="text" placeHolder="Topping 3" id="toppings3Field">
-    </form>
-    <br>
-    <button id="createBtn">Create your pizza!</button>
+   
   </div>
 
 
@@ -96,9 +61,8 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
       for (var i = 0; i<results.length; i++)
       {
         var object = results[i];
-        //alert(object.id + " " + object.get('toppingName'));
         toppingsArray[object.get('toppingName')] = 0;
-        //alert(toppingsArray[object.get('toppingName')]);
+        console.log(object.get('toppingName') + " " + toppingsArray[object.get('toppingName')]);
       }
     }
   })
@@ -109,13 +73,19 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
   openPizzaQuery.find({
 
     success: function(results){
-      alert("SUCCESS");
+      //alert("SUCCESS");
       for (var i = 0; i< results.length; i++)
       {
         
         var object = results[i]
-        //alert(object.id + " " + object.get('topping1'));
-        toppingsArray[object.get('topping1')] = 1;
+        console.log(object.get('creator'));
+        //if (toppingsArray.hasOwnProperty(object.get('topping1')))
+          toppingsArray[object.get('topping1')] = 1;
+        //if (toppingsArray.hasOwnProperty(object.get('topping2')))
+          toppingsArray[object.get('topping2')] = 1;
+        //if (toppingsArray.hasOwnProperty(object.get('topping3')))
+          toppingsArray[object.get('topping3')] = 1;
+        //do this for toppings 2 and 3
         //alert(toppingsArray[object.get('topping1')]);
       }
     },
@@ -124,61 +94,58 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
       alert(error.code);
     }
   })
-  
-  alert(toppingsArray['Mushrooms']);
-  
-  /*Object.keys(toppingsArray).forEach(function(key)
-  {
-    console.log(this[key]);
-    alert(key);
-  });*/
+
+  //alert(toppingsArray['Mushrooms']);
+  alert("PICK YO");
   for (var index in toppingsArray)
   {
     if (toppingsArray.hasOwnProperty(index)) //check if key exists
       {
+
         if (toppingsArray[index]===1)
         {
           availToppings.push(index);
+          console.log(index + " " + toppingsArray[index]);
         }
       }
   }
+
+  //Button functionality that cycles through available things
+  var $locationField = $('#locationField');
+  var $findBtn = $('#findBtn');
+  var clicks = 0;
+  $findBtn.click(function(e)
+  {
+    
+    $('.toppingContent').html("");
+    //myLock = $locationField.val()
+    clicks = clicks + 4;
+    if (clicks>availToppings.length - 4)
+      clicks = 0;
+    getToppings(availToppings, clicks);
+    if (e.originalEvent.defaultPrevented) return;
+
+  })
+
+
+  function getToppings(availToppings, index)
+  {
+    console.log("LENGTH " + availToppings.length);
+    var max = index + 4;
+    if (max > availToppings.length)
+      max = availToppings.length;
+
+    for (var i = index; i < max; i++)
+    {
+      var object = availToppings[i];
+      $('.toppingContent').prepend("<div style='border:1px solid white;' id=topping'" + i + "'>" + "<h3>" + object + "</h3></div>");
+    }
+  }
+  function myFunction()
+  {
+
+  }
 }
-
-        /*function load(){
-          //code here
-          ParseQuery query = new ParseQuery("pizza");
-          query.whereEqualTo("Completed", false);
-          query.findInBackground(new FindCallback() {
-
-            @override
-            public void done(List<ParseObject> objects, ParseExcception e) {
-                if (e == null) {
-                  document.getElementById("list").innerHTML = ".";
-                  for (ParseObject pizzaObject : objects) {
-                    document.getElementById("list").innerHTML = ".";
-                  } else {
-                    document.getElementById("list").innerHTML = "_";
-                  }
-                }
-            }
-          });*/
-          /*
-          var Pizza = Parse.Object.extend("pizzas");
-          var queryObject = new Parse.Query(Pizza);
-
-          queryObject.find({
-            success: function(results){
-              for (var i = 0; i < results.length; i++) {
-                document.getElementById("list").innerHTML = ".";
-              }
-            },
-            error: function (error) {
-              alert("error: " + error.code + " " + error.message);
-            }
-          });
-          */
-        
-
 
   </script>
 </body>
