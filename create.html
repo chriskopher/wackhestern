@@ -75,6 +75,8 @@
       <input type="text" placeHolder="Topping 1" id="toppingsField">
       <input type="text" placeHolder="Topping 2" id="toppings2Field">
       <input type="text" placeHolder="Topping 3" id="toppings3Field">
+      <br>How many slices do you want?
+      <input type="number" id="numberOfSlicesField">
     </form>
     <br>
     <button id="createBtn" type="once">Create your pizza!</button>
@@ -97,6 +99,7 @@
         var $toppingsField = $('#toppingsField');
         var $toppings2Field = $('#toppings2Field');
         var $toppings3Field = $('#toppings3Field');
+        var $numberOfSlicesField = $('#numberOfSlicesField');
 
 
         
@@ -113,6 +116,7 @@
         {
           var NewPizza = Parse.Object.extend("pizza");
           var newPizza = new NewPizza();
+          pizzaa.numSlices = 8 - parseInt(pizzaa.numSlices);
 
           newPizza.save({
             location : pizzaa.location,
@@ -123,8 +127,11 @@
             topping2 : pizzaa.topping2,
             topping3 : pizzaa.topping3,
             Completed : false,
-            numSlices : 8,
-            test : "test"
+            numSlices : pizzaa.numSlices,
+            user1name : "",
+            user2name : "",
+            user3name : "",
+            user4name : ""
           }, {
             success: function(pizzaa){
               createBtn.text('done!');
@@ -173,7 +180,7 @@
         }
 
         function getPizzaFormInputs() {
-          return { location : $locationField.val() , creator : $creatorField.val() , creatorEmail : $emailField.val() , topping1 : $toppingsField.val() , topping2 : $toppings2Field.val() , topping3 : $toppings3Field.val() };
+          return { location : $locationField.val() , creator : $creatorField.val() , creatorEmail : $emailField.val() , topping1 : $toppingsField.val() , topping2 : $toppings2Field.val() , topping3 : $toppings3Field.val() , numSlices : $numberOfSlicesField.val() };
         }
 
   </script>
