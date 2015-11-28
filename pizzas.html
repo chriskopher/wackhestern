@@ -64,7 +64,9 @@
               //alert(object.id + ' - ' + object.get('creator'));
               //pizzasString += 'id="' + object.id + '">' + object.get('creator') + "</div>";
               if(object.get('location') == piza.myLoc || piza.myLoc == "*"){
-              $('.content').prepend("<div style='border:1px solid black;' id='" + object.id + "'>" + "<h3>" + object.get('creator') + "<br>" + object.get('numSlices') + " slice(s) left!" + "</h3>" + object.get('updatedAt')  + "<div>" + object.get('topping1') + "<br>" + object.get('topping2') + "<br>" + object.get('topping3') +"</div>" + "</div><br>");
+                if(object.get('numSlices') > 0){
+                  $('.content').prepend("<div style='border:1px solid black;' id='" + object.id + "'>" + "<h3>" + object.get('creator') + "<br>" + object.get('numSlices') + " slice(s) left!" + "</h3>" + object.get('location') + "<br>" + object.get('updatedAt')  + "<div>" + object.get('topping1') + "<br>" + object.get('topping2') + "<br>" + object.get('topping3') +"</div>" + "<button class='btn-default' id='" + object.id + "'>Join this order!</button></div><br>");
+                }
               }
             }
           },
