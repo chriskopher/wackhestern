@@ -75,7 +75,7 @@
       <input type="text" placeHolder="Topping 3" id="toppings3Field">
     </form>
     <br>
-    <button id="createBtn">Create your pizza!</button>
+    <button id="createBtn" type="once">Create your pizza!</button>
   </div>
 
 
@@ -96,6 +96,8 @@
         var $toppings2Field = $('#toppings2Field');
         var $toppings3Field = $('#toppings3Field');
 
+
+        
         $createBtn.click(function(e) {
           createPizza(getPizzaFormInputs(), $(e.currentTarget));
         });

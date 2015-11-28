@@ -35,8 +35,8 @@
     <h1 id="test">Enter your location to find nearby pizza orders:</h1>
 
     <input type="text" placeHolder="Location (* for global)" id="locationField">
-    <button id="findBtn">Find your pizza!</button>
-    <h3>Select a pizza below:</h3>
+    <button class="btn-default" id="findBtn">Find your pizza!</button>
+    <h3>Join a pizza order below.<br>Your email will only be shared with the Pizza Creator.</h3>
     <br>
    <div class="row">
       <div class="content" id="list"></div>
@@ -64,7 +64,7 @@
         {
         var Pizzas = Parse.Object.extend("pizza");
         var query = new Parse.Query(Pizzas);
-        query.equalTo("test", "test");
+        //query.equalTo("test", "test");
         query.find({
           success: function(results){
             //document.getElementById("list").innerHTML = "hey";
