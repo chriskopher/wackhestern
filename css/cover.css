@@ -161,3 +161,15 @@ body {
     width: 700px;
   }
 }
+
+
+/* MY CSS STUFF */
+
+body {
+  background: #FF7e79 !important;
+}
+
+.pull-left img {
+  width: auto;
+  height: 100px;
+}
