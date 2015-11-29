@@ -75,8 +75,9 @@
                                     var object = results[i];
                                     //alert(object.id + ' - ' + object.get('creator'));
                                     //pizzasString += 'id="' + object.id + '">' + object.get('creator') + "</div>";
-                                    if (object.get('location').toUpperCase() === piza.myLoc.toUpperCase() || piza.myLoc == "*") {
+                                    if (object.get('location') == piza.myLoc || piza.myLoc == "*") {
                                         if (object.get('numSlices') > 0) {
+                                            //console.log(object.id);
                                             $('.content').prepend("<div class='rcorners1' style='border:3px solid #ce655f; height = 100%; width: auto; margin: 0 auto; background-image: url(za.png);'  id='" + object.id + "'>" + "<h3>" + object.get('creator') + "<br>" + object.get('numSlices') + " slice(s) left!" + "</h3>" + object.get('location') + "<br>" + object.get('updatedAt') + "<div>" + object.get('topping1') + "<br>" + object.get('topping2') + "<br>" + object.get('topping3') + "<br><h4>Others Joined: " + object.get('user1name') + " " + object.get('user2name') + " " + object.get('user3name') + " " + object.get('user4name') + "</h4></div>" + "<input class='typing' type='text' placeHolder='Your Name' id='nameField'><input class='typing' type='number' placeHolder='# of slices desired' id='slicesField'><input class='typing' type='text' placeHolder='Your Email' id='emailField'><button class='btn-default' value='" + object.id + "' id='" + object.id + "' onclick='updateRecord(" + object.id + ")'>Join this order!</button></div><br>");
                                         }
                                     }
@@ -93,32 +94,31 @@
 
                     function updateRecord(recordID) {
                         //https://parse.com/questions/updating-a-field-without-retrieving-the-object-first
-                        alert(recordID.id);
+                        
+                        //alert(recordID.id);
+                        console.log(recordID);
+                        console.log(recordID.id);
+                        
+
 
                         // Create a pointer to an object of class Point with ID ###
                         var Point = Parse.Object.extend("pizza");
                         var point = new Point();
-                        point.id = recordID.id //change this to the div ID
+                        point.id = record.id; //change this to the div ID
 
-                        alert(!point.user1name);
-                        var abc = "cde";
+                        console.log(point.id);
 
-                        //Set a new value on user1name using logic to check if the fields are blank or not
-                        if (!point.user1name) {
-                            console.log("no user1name here");
-                            point.set("user1name", abc);
-                        } else if (!point.user2name) {
-                            alert("success");
-                            point.set("user2name", "asdfsaf");
-                        } else if (!point.user3name) {
-                            point.set("user3name", "google");
-                        } else if (!point.user4name) {
-                            point.set("user4name", "fhfhfhfhf");
-                        }
+                        var email = "you@yourself.com";
+                        point.set("user1email", email);
+                        console.log(point);
+                        
+                        
 
                         //Save
                         point.save(null, {
-                            success: function(point) {},
+                            success: function(point) {
+                                console.log("record saved successfully");
+                            },
                             error: function(point, error) {
                                 alert('Failed to create new object, with error code: ' + error.message);
                             }
