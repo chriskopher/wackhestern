@@ -54,7 +54,7 @@
                         showPizza(getFormInputs(), $(e.currentTarget));
                     });
 
-                    
+
 
                     function getFormInputs() {
                         return {
@@ -93,29 +93,32 @@
 
                     function updateRecord(recordID) {
                         //https://parse.com/questions/updating-a-field-without-retrieving-the-object-first
-                        //alert(recordID.id);
+                        alert(recordID.id);
 
                         // Create a pointer to an object of class Point with ID ###
                         var Point = Parse.Object.extend("pizza");
                         var point = new Point();
                         point.id = recordID.id //change this to the div ID
 
+                        alert(!point.user1name);
+                        var abc = "cde";
+
                         //Set a new value on user1name using logic to check if the fields are blank or not
                         if (!point.user1name) {
-                            point.set("user1name","abc");
+                            console.log("no user1name here");
+                            point.set("user1name", abc);
                         } else if (!point.user2name) {
-                            point.set("user2name","asdfsaf");
                             alert("success");
+                            point.set("user2name", "asdfsaf");
                         } else if (!point.user3name) {
-                            point.set("user3name","google");
+                            point.set("user3name", "google");
                         } else if (!point.user4name) {
-                            point.set("user4name","fhfhfhfhf");
+                            point.set("user4name", "fhfhfhfhf");
                         }
 
                         //Save
-                        point.save (null, {
-                            success: function(point) {
-                            },
+                        point.save(null, {
+                            success: function(point) {},
                             error: function(point, error) {
                                 alert('Failed to create new object, with error code: ' + error.message);
                             }
