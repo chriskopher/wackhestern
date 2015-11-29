@@ -53,8 +53,9 @@
 
                   <div class="row">
                     <div class="findButton"></div>
-                    <input type="text" placeholder="How many slices?" id="numOfSlices"></input>
-                    <button class="btn-default" id="findPizzaBtn">Find a pie!</button>
+                    <input class='typing' type='text' placeholder='Your Name' id='nameField'></input>
+                    <input class='typing' type='number' placeholder='How many slices?' id='slicesField'></input>
+                    <input class='typing' type='text' placeholder='Your Email' id='emailField'></input><button class="btn-default" id="findPizzaBtn">Find a pie!</button>
                   </div>
                  
                 </div>
@@ -70,7 +71,7 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
   var toppingsQuery = new Parse.Query(ToppingsTable);
   var toppingsArray = new Object(); //stores topping name and status
   var availToppings = []; //stores valid toppings and whether they are selected
-  var $numOfSlices = $('#numOfSlices');
+  
   var chosenToppings = [];
 
   function myFunction()
@@ -133,6 +134,9 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
 
   //Button functionality that cycles through available things
   var $locationField = $('#locationField');
+  var $numOfSlices = $('#slicesField');
+  var $nameField = $('#nameField');
+  var $emailField = $('emailField');
   var $findBtn = $('#findBtn');
   var $findPizzaBtn = $('#findPizzaBtn');
   var clicks = 0;
@@ -200,8 +204,9 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
             //check matches by hashing the two arrays of toppings
             if (hashToppings(toppingsArray) == hashToppings(chosenToppings))
             {
-              //UPDATE HERE
-              window.location.href='confirmationPage.html?' + object.id + "," + $numOfSlices.val();
+              //UPDATE PARSE HERE
+              updateParse(object.id);
+              //window.location.href='confirmationPage.html?' + object.id + "," + $numOfSlices.val();
             }
           }
         }
@@ -213,12 +218,35 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
     }
   })
   
-  function updateParse()
+  function updateParse(objectId)
   {
     var PizzaTable = Parse.Object.extend('Pizza');
     var pizza = new PizzaTable();
+    var pizzaQuery = new Parse.Query(PizzaTable);
+    pizzaQuery.equalTo("objectId", objectId);
+    pizzaQuery.first({
+      success: function(results){
+        alert("YOOO");
+        //var object = results;
+        console.log("user1 " + results.get('user1name'));
+        console.log("user2 " + results.get('user2name'));
+        console.log("user3 " + results.get('user3name'));
+        console.log("user4 " + results.get('user4name'));
+      }
+    })
 
-    pizza.save()
+    var name = $nameField.val();
+    var numOfSlices = $numOfSlices.val();
+    var email = $emailField.val();
+
+    pizza.id = objectId;
+
+
+
+    alert(objectId);
+
+
+    
   }
 
   function hashToppings(toppingArray)
