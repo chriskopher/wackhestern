@@ -41,6 +41,12 @@
     <div class="row">
       <div class="toppingContent" id="list"></div>
     </div>
+
+    <div class="row">
+      <div class="findButton"></div>
+      <input type="text" placeholder="How many slices?" id="numOfSlices"></input>
+      <button class="btn-default" id="findPizzaBtn">Find a pie!</button>
+    </div>
    
   </div>
 
@@ -54,6 +60,7 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
   var toppingsQuery = new Parse.Query(ToppingsTable);
   var toppingsArray = new Object(); //stores topping name and status
   var availToppings = []; //stores valid toppings and whether they are selected
+  var chosenToppings = [];
 
   toppingsQuery.ascending("toppingName");
   toppingsQuery.find({
@@ -77,7 +84,7 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
       for (var i = 0; i< results.length; i++)
       {
         
-        var object = results[i]
+        var object = results[i];
         console.log(object.get('creator'));
         //if (toppingsArray.hasOwnProperty(object.get('topping1')))
           toppingsArray[object.get('topping1')] = 1;
@@ -101,7 +108,6 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
   {
     if (toppingsArray.hasOwnProperty(index)) //check if key exists
       {
-
         if (toppingsArray[index]===1)
         {
           availToppings.push(index);
@@ -119,14 +125,15 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
     
     $('.toppingContent').html("");
     //myLock = $locationField.val()
+
     clicks = clicks + 4;
     if (clicks>availToppings.length - 4)
       clicks = 0;
+
     getToppings(availToppings, clicks);
     if (e.originalEvent.defaultPrevented) return;
 
   })
-
 
   function getToppings(availToppings, index)
   {
@@ -137,10 +144,48 @@ Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJ
 
     for (var i = index; i < max; i++)
     {
-      var object = availToppings[i];
-      $('.toppingContent').prepend("<div style='border:1px solid white;' id=topping'" + i + "'>" + "<h3>" + object + "</h3></div>");
+      
+      var buttonString = "<button class='btn-default' id= " + availToppings[i] + "onclick=pickTopping(chosenToppings," + availToppings[i] + ")'>Choose!</button>";
+
+      $('.toppingContent').prepend("<div style='border:1px solid white;' id=topping'" + i + "'>" + "<h3>" + availToppings[i] + "</h3>"  + buttonString + "</div>" );
+
     }
   }
+  function pickTopping(chosenToppings, topping)
+  {
+    if (chosenToppings.length < 3)
+      chosenToppings[chosenToppings.Length] = topping;
+  }
+
+  //button functionality for trying to find a pizza
+  $findPizzaBtn.click(function(e)
+  {
+    var Pizzas = Parse.Object.extend("pizza");
+    var query = new Parse.Query(Pizzas);
+    if (chosenToppings>0)
+    {
+      query.find({
+        success: function(results){
+          for (var i = 0; i < results.length; i++)
+          {
+            var object = results[i];
+            if (object.get('topping1') == chosenToppings)
+          }
+        }
+      })
+    }
+    else
+    {
+      alert("Please pick a topping!");
+    }
+  })
+  function hashToppings(top1, top2, top3)
+  {
+    //reorder three toppings based on alphabetical order
+    //then hash by grabbing first several letters or grab the topping ID
+    //go into Toppings and validate when pizza is created 
+  }
+
   function myFunction()
   {
 
