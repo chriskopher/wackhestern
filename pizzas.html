@@ -16,6 +16,7 @@
 
 <body>
     <div id="main">
+    <br>
         <h1 id="test">Enter your location to find nearby pizza orders:</h1>
         <input type="text" class="typing" placeHolder="Location (* for global)" id="locationField">
         <button class="btn-default" id="findBtn">Find your pizza!</button>
@@ -58,7 +59,7 @@
                         //pizzasString += 'id="' + object.id + '">' + object.get('creator') + "</div>";
                         if (object.get('location') == piza.myLoc || piza.myLoc == "*") {
                             if (object.get('numSlices') > 0) {
-                                $('.content').prepend("<div style='border:1px solid black; width: 90%; margin: 0 auto;' id='" + object.id + "'>" + "<h3>" + object.get('creator') + "<br>" + object.get('numSlices') + " slice(s) left!" + "</h3>" + object.get('location') + "<br>" + object.get('updatedAt') + "<div>" + object.get('topping1') + "<br>" + object.get('topping2') + "<br>" + object.get('topping3') + "<br><h4>Others Joined: " + object.get('user1name') + " " + object.get('user2name') + " " + object.get('user3name') + " " + object.get('user4name') + "</h4></div>" + "<input class='typing' type='text' placeHolder='Your Name' id='nameField'><input class='typing' type='number' placeHolder='# of slices desired' id='slicesField'><input class='typing' type='text' placeHolder='Your Email' id='emailField'><button class='btn-default' id='" + object.id + "' onclick='update(" + object.id + ")'>Join this order!</button></div><br>");
+                                $('.content').prepend("<div class='rcorners1' style='border:3px solid #ce655f; width: 90%; margin: 0 auto; background-image: url(za.png);'  id='" + object.id + "'>" + "<h3>" + object.get('creator') + "<br>" + object.get('numSlices') + " slice(s) left!" + "</h3>" + object.get('location') + "<br>" + object.get('updatedAt') + "<div>" + object.get('topping1') + "<br>" + object.get('topping2') + "<br>" + object.get('topping3') + "<br><h4>Others Joined: " + object.get('user1name') + " " + object.get('user2name') + " " + object.get('user3name') + " " + object.get('user4name') + "</h4></div>" + "<input class='typing' type='text' placeHolder='Your Name' id='nameField'><input class='typing' type='number' placeHolder='# of slices desired' id='slicesField'><input class='typing' type='text' placeHolder='Your Email' id='emailField'><button class='btn-default' id='" + object.id + "' onclick='update(" + object.id + ")'>Join this order!</button></div><br>");
                             }
                         }
                     }
