@@ -15,90 +15,111 @@
 </head>
 
 <body>
-    <div id="main">
-    <br>
-        <h1 id="test">Enter your location to find nearby pizza orders:</h1>
-        <input type="text" class="typing" placeHolder="Location (* for global)" id="locationField">
-        <button class="btn-default" id="findBtn">Find your pizza!</button>
-        <h3>Join a pizza order below.<br>Your email will only be shared with the Pizza Creator.</h3>
-        <br>
-        <div class="row">
-            <div class="content" id="list"></div>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="index.html" class="pull-left">
+                    <img src="logo - FindPizzaForMe.png" style="PADDING-TOP: 20px">
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+            </div>
         </div>
-        <script type="text/javascript">
-        Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJexP7Zf58oDEv82Z1TxKFb9");
+    </nav>
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="cover-container">
+                <div class="inner cover">
+                    <div id="main">
+                        <br>
+                        <h1 id="test">Enter your location to find nearby pizza orders:</h1>
+                        <input type="text" class="typing" placeHolder="Location (* for global)" id="locationField">
+                        <button class="btn-default" id="findBtn">Find your pizza!</button>
+                        <h3>Join a pizza order below.<br>Your email will only be shared with the Pizza Creator.</h3>
+                        <br>
+                        <div class="row">
+                            <div class="content" id="list"></div>
+                        </div>
+                        <script type="text/javascript">
+                        Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJexP7Zf58oDEv82Z1TxKFb9");
 
-        var pizzasString = "";
-        var $locationField = $('#locationField');
-        var $findBtn = $('#findBtn');
-        var myLoc = "";
-        $findBtn.click(function(e) {
-            $('.content').html("");
-            myLoc = $locationField.val()
-            showPizza(getFormInputs(), $(e.currentTarget));
-        });
+                        var pizzasString = "";
+                        var $locationField = $('#locationField');
+                        var $findBtn = $('#findBtn');
+                        var myLoc = "";
+                        $findBtn.click(function(e) {
+                            $('.content').html("");
+                            myLoc = $locationField.val()
+                            showPizza(getFormInputs(), $(e.currentTarget));
+                        });
 
-        function getFormInputs() {
-            return {
-                myLoc: $locationField.val()
-            };
-        }
-
-        function showPizza(piza, findBtn) {
-            var Pizzas = Parse.Object.extend("pizza");
-            var query = new Parse.Query(Pizzas);
-            //query.equalTo("test", "test");
-            query.find({
-                success: function(results) {
-                    //document.getElementById("list").innerHTML = "hey";
-                    //alert("Successfully retrieved " + results.length + " pizzas.");
-                    for (var i = 0; i < results.length; i++) {
-                        //document.getElementById("list").innerHTML = "hey";
-                        var object = results[i];
-                        //alert(object.id + ' - ' + object.get('creator'));
-                        //pizzasString += 'id="' + object.id + '">' + object.get('creator') + "</div>";
-                        if (object.get('location') == piza.myLoc || piza.myLoc == "*") {
-                            if (object.get('numSlices') > 0) {
-                                $('.content').prepend("<div class='rcorners1' style='border:3px solid #ce655f; width: 90%; margin: 0 auto; background-image: url(za.png);'  id='" + object.id + "'>" + "<h3>" + object.get('creator') + "<br>" + object.get('numSlices') + " slice(s) left!" + "</h3>" + object.get('location') + "<br>" + object.get('updatedAt') + "<div>" + object.get('topping1') + "<br>" + object.get('topping2') + "<br>" + object.get('topping3') + "<br><h4>Others Joined: " + object.get('user1name') + " " + object.get('user2name') + " " + object.get('user3name') + " " + object.get('user4name') + "</h4></div>" + "<input class='typing' type='text' placeHolder='Your Name' id='nameField'><input class='typing' type='number' placeHolder='# of slices desired' id='slicesField'><input class='typing' type='text' placeHolder='Your Email' id='emailField'><button class='btn-default' id='" + object.id + "' onclick='update(" + object.id + ")'>Join this order!</button></div><br>");
-                            }
+                        function getFormInputs() {
+                            return {
+                                myLoc: $locationField.val()
+                            };
                         }
-                    }
-                },
-                error: function(object, error) {
 
-                }
-            });
-        }
+                        function showPizza(piza, findBtn) {
+                            var Pizzas = Parse.Object.extend("pizza");
+                            var query = new Parse.Query(Pizzas);
+                            //query.equalTo("test", "test");
+                            query.find({
+                                success: function(results) {
+                                    //document.getElementById("list").innerHTML = "hey";
+                                    //alert("Successfully retrieved " + results.length + " pizzas.");
+                                    for (var i = 0; i < results.length; i++) {
+                                        //document.getElementById("list").innerHTML = "hey";
+                                        var object = results[i];
+                                        //alert(object.id + ' - ' + object.get('creator'));
+                                        //pizzasString += 'id="' + object.id + '">' + object.get('creator') + "</div>";
+                                        if (object.get('location') == piza.myLoc || piza.myLoc == "*") {
+                                            if (object.get('numSlices') > 0) {
+                                                $('.content').prepend("<div class='rcorners1' style='border:3px solid #ce655f; width: 90%; margin: 0 auto; background-image: url(za.png);'  id='" + object.id + "'>" + "<h3>" + object.get('creator') + "<br>" + object.get('numSlices') + " slice(s) left!" + "</h3>" + object.get('location') + "<br>" + object.get('updatedAt') + "<div>" + object.get('topping1') + "<br>" + object.get('topping2') + "<br>" + object.get('topping3') + "<br><h4>Others Joined: " + object.get('user1name') + " " + object.get('user2name') + " " + object.get('user3name') + " " + object.get('user4name') + "</h4></div>" + "<input class='typing' type='text' placeHolder='Your Name' id='nameField'><input class='typing' type='number' placeHolder='# of slices desired' id='slicesField'><input class='typing' type='text' placeHolder='Your Email' id='emailField'><button class='btn-default' id='" + object.id + "' onclick='update(" + object.id + ")'>Join this order!</button></div><br>");
+                                            }
+                                        }
+                                    }
+                                },
+                                error: function(object, error) {
 
-        function update(recordID) {
-            //alert("hi");
-            var $nameField = $('#nameField');
-            var $slicesField = $('#slicesField');
-            var $emailField = $('#emailField');
-        }
-        /*
-        function getPizzaFormInputs() {
-        return {
-            name: $locationField.val(),
-            creator: $creatorField.val(),
-            creatorEmail: $emailField.val(),
-            topping1: $toppingsField.val(),
-            topping2: $toppings2Field.val(),
-            topping3: $toppings3Field.val(),
-            numSlices: $numberOfSlicesField.val()
-        };
-        */
-    
-        /*
-        query.find({
-        success: function(results) {
-            results.each(function(results){
-                console.log(results.get("creator"));
-            });
-        */
-        //alert(pizzasString);
-        //document.getElementById("list").innerHTML = pizzasString;
-        </script>
+                                }
+                            });
+                        }
+
+                        function update(recordID) {
+                            //alert("hi");
+                            var $nameField = $('#nameField');
+                            var $slicesField = $('#slicesField');
+                            var $emailField = $('#emailField');
+                        }
+                        /*
+                        function getPizzaFormInputs() {
+                        return {
+                            name: $locationField.val(),
+                            creator: $creatorField.val(),
+                            creatorEmail: $emailField.val(),
+                            topping1: $toppingsField.val(),
+                            topping2: $toppings2Field.val(),
+                            topping3: $toppings3Field.val(),
+                            numSlices: $numberOfSlicesField.val()
+                        };
+                        */
+
+                        /*
+                        query.find({
+                        success: function(results) {
+                            results.each(function(results){
+                                console.log(results.get("creator"));
+                            });
+                        */
+                        //alert(pizzasString);
+                        //document.getElementById("list").innerHTML = pizzasString;
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
