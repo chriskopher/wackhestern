@@ -106,6 +106,7 @@
 
                     $createBtn.click(function(e) {
                         createPizza(getPizzaFormInputs(), $(e.currentTarget));
+                        $('#createBtn').attr("disabled", true);
                     });
 
                     $signUpBtn.click(function(e) {
@@ -134,7 +135,7 @@
                             user4name: ""
                         }, {
                             success: function(pizzaa) {
-                                createBtn.text('done!');
+                                createBtn.text('Done!');
                             },
                             error: function(pizzaa, error) {
                                 alert('Failed to create new object, with error code: ' + error.message);
@@ -226,7 +227,6 @@
     var $numberOfSlicesField = $('#numberOfSlicesField');
 
 
-
     $createBtn.click(function(e) {
         createPizza(getPizzaFormInputs(), $(e.currentTarget));
     });
@@ -257,7 +257,7 @@
             user4name: ""
         }, {
             success: function(pizzaa) {
-                createBtn.text('done!');
+                createBtn.text('Done!');
             },
             error: function(pizzaa, error) {
                 alert('Failed to create new object, with error code: ' + error.message);
