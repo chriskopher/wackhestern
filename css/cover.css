@@ -220,3 +220,6 @@ body {
 .rcorners1 {
     border-radius: 25px;
 }
+.mybg{
+    background-image: : url("bg.png");
+}
