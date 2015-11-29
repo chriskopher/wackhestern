@@ -32,7 +32,7 @@ a:hover {
 html,
 body {
     height: 100%;
-    background-color: #333;
+    background-color: #FF7e79;
 }
 
 body {
@@ -192,13 +192,11 @@ body {
 
 /* MY CSS STUFF */
 
-body {
-    background: #FF7e79 !important;
-}
-
 .pull-left img {
     width: auto;
     height: 100px;
+    transition: all 0.25s ease;
+    padding-top: 20px;
 }
 
 .navbar-brand {
@@ -212,7 +210,24 @@ body {
 .navbar-fixed-top {
     background-color: #FF7e79;
     height: 120px;
+    transition: all 0.25s ease;
 }
+
+.navbar-fixed-top.shrink {
+    background-color: #FF7e79;
+    height: 60px;
+}
+
+.pull-left.shrink img {
+    width: auto;
+    height: 50px;
+    padding-top: 10px;
+}
+
+.btn-default {
+    width: 150px;
+}
+
 
 .header-shadow{
     background-image: url('za.png');
