@@ -82,9 +82,11 @@
                             <input class="typing" type="number" id="numberOfSlicesField">
                         </form>
                         <br>
-                        <button class="typing" id="createBtn" type="once">Create your pizza!</button>
+                        <button class="typing" id="createBtn" type="once">Create your pizza!</button><br><br>
+                        <a href="pizzas.html" style="display:none" id="viewBtn"><button class="typing">View your pizza!</button></a>
                     </div>
                     <script type="text/javascript">
+                    
                     Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJexP7Zf58oDEv82Z1TxKFb9");
 
                     var $actionForm = $('#actionForm');
@@ -102,11 +104,11 @@
                     var $toppings3Field = $('#toppings3Field');
                     var $numberOfSlicesField = $('#numberOfSlicesField');
 
-
-
                     $createBtn.click(function(e) {
                         createPizza(getPizzaFormInputs(), $(e.currentTarget));
                         $('#createBtn').attr("disabled", true);
+                        $('#viewBtn').show();
+
                     });
 
                     $signUpBtn.click(function(e) {
@@ -134,7 +136,9 @@
                             user2name: "",
                             check2: "",
                             user3name: "",
-                            user4name: ""
+                            check3: "",
+                            user4name: "",
+                            check4: ""
                         }, {
                             success: function(pizzaa) {
                                 createBtn.text('Done!');
@@ -196,6 +200,7 @@
                             numSlices: $numberOfSlicesField.val()
                         };
                     }
+                    
                     </script>
                 </div>
             </div>
@@ -210,115 +215,7 @@
         <!-- signup button -->
         <button class="access__button" id="signUpBtn">Not signed up yet?</button>
     </div>
-    <script type="text/javascript">
-    Parse.initialize("7KqL30AZciYFanvE29SVJMJBUEJu4yTBpjFLhMrf", "o3sqlOBTBjSZsvfHxJexP7Zf58oDEv82Z1TxKFb9");
-
-    var $actionForm = $('#actionForm');
-    var $actionForm2 = $('#actionForm2');
-    var $signUpBtn = $('#signUpBtn');
-    var $createBtn = $('#createBtn');
-    var $actionFormSubmitBtn = $('#actionFormSubmitBtn');
-    var $usernameField = $('#usernameField');
-    var $passwordField = $('#passwordField');
-    var $locationField = $('#locationField');
-    var $creatorField = $('#creatorField');
-    var $emailField = $('#emailField');
-    var $toppingsField = $('#toppingsField');
-    var $toppings2Field = $('#toppings2Field');
-    var $toppings3Field = $('#toppings3Field');
-    var $numberOfSlicesField = $('#numberOfSlicesField');
-
-/*
-    $createBtn.click(function(e) {
-        createPizza(getPizzaFormInputs(), $(e.currentTarget));
-    });
-*/
-    $signUpBtn.click(function(e) {
-        // signup by passing form inputs and a reference to the   button that was pressed to notify the user about what is  going on
-        signUp(getFormInputs(), $(e.currentTarget));
-    });
-
-    function createPizza(pizzaa, createBtn) {
-        var NewPizza = Parse.Object.extend("pizza");
-        var newPizza = new NewPizza();
-        pizzaa.numSlices = 8 - parseInt(pizzaa.numSlices);
-
-        newPizza.save({
-            location: pizzaa.location,
-            //location : "toronto", 
-            creator: pizzaa.creator,
-            creatorEmail: pizzaa.creatorEmail,
-            topping1: pizzaa.topping1,
-            topping2: pizzaa.topping2,
-            topping3: pizzaa.topping3,
-            Completed: false,
-            numSlices: pizzaa.numSlices,
-            user1name: "",
-            user2name: "",
-            user3name: "",
-            user4name: ""
-        }, {
-            success: function(pizzaa) {
-                createBtn.text('Done!');
-            },
-            error: function(pizzaa, error) {
-                alert('Failed to create new object, with error code: ' + error.message);
-            }
-        });
-    }
-
-    function signUp(user, signUpButton) {
-        // notify user of progress
-        signUpButton.text('Signing up ...');
-
-        // verify parameters
-        if (user.username.length && user.password.length) {
-            // create a new user object
-            var newUser = new Parse.User();
-
-            // use object literal notation to set the values for this user object
-            newUser.signUp({
-                username: user.username,
-                password: user.password,
-            }, {
-                success: function(user) {
-                    // modify the UI for a signed in user
-                    adjustUI(Parse.User.current());
-                    // reset sign up button for later use
-                    signUpButton.text('Not signed up yet?');
-                    // get posts by blog author and default postSkip to 0
-                    getPosts(postSearchLimit, postSkip = 0);
-                },
-                error: function(user, error) {
-                    // display error code and message
-                    console.log(error.code + " " + error.message);
-                    // reset sign up button
-                    signUpButton.text('Not signed up yet?');
-                }
-            });
-        }
-    }
-
-    // take the inputted values from the signup/signin form
-    function getFormInputs() {
-        return {
-            username: $usernameField.val(),
-            password: $passwordField.val()
-        };
-    }
-
-    function getPizzaFormInputs() {
-        return {
-            location: $locationField.val(),
-            creator: $creatorField.val(),
-            creatorEmail: $emailField.val(),
-            topping1: $toppingsField.val(),
-            topping2: $toppings2Field.val(),
-            topping3: $toppings3Field.val(),
-            numSlices: $numberOfSlicesField.val()
-        };
-    }
-    </script>
+    
 </body>
 
 </html>
