@@ -79,7 +79,7 @@
                                     if (object.get('location') == piza.myLoc || piza.myLoc == "*") {
                                         if (object.get('numSlices') > 0) {
                                             //console.log(object.id);
-                                            $('.content').prepend("<div class='rcorners1' style='border:3px solid #ce655f; height = 100%; width: auto; margin: 0 auto; background-image: url(za.png);'  id='" + object.id + "'>" + "<h3>" + object.get('creator') + "<br>" + object.get('numSlices') + " slice(s) left!" + "</h3>" + object.get('location') + "<br>" + object.get('updatedAt') + "<div>" + object.get('topping1') + "<br>" + object.get('topping2') + "<br>" + object.get('topping3') + "<br><h4 id='othersJoined'>Others Joined: " + object.get('user1name') + " " + object.get('check1') + " " + object.get('user2name') + " " + object.get('check2') + " " + object.get('user3name') + " " + object.get('check3') + " " + object.get('user4name') + " " + object.get('check4') + "</h4></div>" + "<input class='typing' type='text' placeHolder='Your Name' id='nameField'><input class='typing' type='number' placeHolder='# of slices desired' id='slicesField'><input class='typing' type='text' placeHolder='Your Email' id='emailField'><button class='btn-default' value='" + object.id + "' id='" + object.id + "' onclick='updateRecord(" + object.id + ")'>Join this order!</button></div><br>");
+                                            $('.content').prepend("<div class='rcorners1' style='border:3px solid #ce655f; height = 100%; width: auto; margin: 0 auto; background-image: url(za.png);'  id='" + object.id + "'>" + "<h3>" + object.get('creator') + "<br>" + object.get('numSlices') + " slice(s) left!" + "</h3>" + object.get('location') + "<br>" + object.get('createdAt') + "<div>" + object.get('topping1') + "<br>" + object.get('topping2') + "<br>" + object.get('topping3') + "<br><h4 id='othersJoined'>Others Joined: " + object.get('user1name') + " " + object.get('check1') + " " + object.get('user2name') + " " + object.get('check2') + " " + object.get('user3name') + " " + object.get('check3') + " " + object.get('user4name') + " " + object.get('check4') + "</h4></div>" + "<input class='typing' type='text' placeHolder='Your Name' id='nameField'><input class='typing' type='number' placeHolder='# of slices desired' id='slicesField'><input class='typing' type='text' placeHolder='Your Email' id='emailField'><button class='btn-default' value='" + object.id + "' id='" + object.id + "' onclick='updateRecord(" + object.id + ")'>Join this order!</button></div><br>");
                                         }
                                     }
                                     //if (i == 51)
@@ -98,8 +98,8 @@
                     function updateRecord(recordID) {
                         //https://parse.com/questions/updating-a-field-without-retrieving-the-object-first
 
-                        console.log(recordID[0].id);
-                        console.log(typeof(recordID[0].id));
+                        //console.log(recordID[0].id);
+                        //console.log(typeof(recordID[0].id));
                         
                         
 
@@ -115,18 +115,53 @@
                         var theirName = $('#' + recordID[0].id).find('#nameField').val();
                         var theirSlices = $('#' + recordID[0].id).find('#slicesField').val();
                         var theirEmail = $('#' + recordID[0].id).find('#emailField').val();
-                        console.log(theirName+theirSlices+theirEmail);
+                        //console.log(theirName+theirSlices+theirEmail);
 
                         //check the number of ✔'s to figure out which cells to update
                         var checkString = $('#' + recordID[0].id).find('#othersJoined').text();
-                        console.log(checkString);
+                        //console.log(checkString);
 
                         var checkCount = (checkString.match(/\u2714/g) || []).length;
-                        console.log(checkCount);
+                        //console.log(checkCount);
 
                         //var email = "you@yourself.com";
                         //up.set("user1email", email);
                         //console.log(up);
+                        //console.log(up.get('numSlices'));
+                        var currentSlices = up.get('numSlices');
+
+                        if (checkCount == 0)
+                        {
+                            up.set("user1name", theirName);
+                            up.set("numSlices", (currentSlices-theirSlices));
+                            up.set("user1email", theirEmail);
+                            up.set("user1slices", (parseInt(theirSlices)));
+                            up.set("check1", "\u2714");
+                        }
+                        else if (checkCount == 1)
+                        {
+                            up.set("user2name", theirName);
+                            up.set("numSlices", (currentSlices-theirSlices));
+                            up.set("user2email", theirEmail);
+                            up.set("user2slices", (parseInt(theirSlices)));
+                            up.set("check2", "\u2714");
+                        }
+                        else if (checkCount == 2)
+                        {
+                            up.set("user3name", theirName);
+                            up.set("numSlices", (currentSlices-theirSlices));
+                            up.set("user3email", theirEmail);
+                            up.set("user3slices", (parseInt(theirSlices)));
+                            up.set("check3", "\u2714");
+                        }
+                        else if (checkCount == 3)
+                        {
+                            up.set("user4name", theirName);
+                            up.set("numSlices", (currentSlices-theirSlices));
+                            up.set("user4email", theirEmail);
+                            up.set("user4slices", (parseInt(theirSlices)));
+                            up.set("check4", "\u2714");
+                        }
                         
                         
 
