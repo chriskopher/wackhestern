@@ -163,7 +163,8 @@
                             up.set("check4", "\u2714");
                         }
                         
-                        
+                        $('#' + recordID[0].id).find('#' + recordID[0].id).attr("disabled", true);
+                        $('#' + recordID[0].id).find('#' + recordID[0].id).text('Joined!');
 
                         //Save
                         up.save(null, {
