@@ -12,5 +12,5 @@ Next time you want to just Netflix without feeling guilty of eating an entire gr
 ## More information and screenshots [here](https://devpost.com/software/find-pizza-for-me)! ##
 
 ### Brought to you by WackHestern ### 
-#### November 27-29, 2015 ####
+#### Hack Western - November 27-29, 2015 ####
 
